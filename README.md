@@ -32,3 +32,61 @@ See the classroom instruction and code comments for more details on each of thes
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./2D_feature_tracking`.
+
+## Results
+
+Some notes:
+1- AKAZE detectors only work with AKAZE descriptors
+2- Sift does not work with orb
+
+Number of keypoints by each detector is given in table below
+
+|      | akaze | sift | harris | shitomasi | fast  | brisk | orb |
+|------|-------|------|--------|-----------|-------|-------|-----|
+| img0 | 166   | 138  | 17     | 125       | 419   | 419   | 264 |
+| img1 | 157   | 132  | 14     | 118       | 427   | 427   | 282 |
+| img2 | 161   | 124  | 18     | 123       | 404   | 404   | 282 |
+| img3 | 155   | 137  | 21     | 120       | 423   | 423   | 277 |
+| img4 | 163   | 134  | 26     | 120       | 386   | 386   | 297 |
+| img5 | 164   | 140  | 43     | 113       | 414   | 414   | 279 |
+| img6 | 173   | 137  | 18     | 114       | 418   | 418   | 289 |
+| img7 | 175   | 148  | 31     | 123       | 406   | 406   | 272 |
+| img8 | 177   | 159  | 26     | 111       | 396   | 396   | 266 |
+| img9 | 179   | 137  | 34     | 112       | 401   | 401   | 254 |
+
+with mean values shown here
+
+|      | akaze | sift | harris | shitomasi | fast  | brisk | orb |
+|------|-------|------|--------|-----------|-------|-------|-----|
+| mean | 167   | 138  | 19     | 125       | 410   | 310   | 271 |
+
+Mean of number of matches between different descriptors/detectors is shown here
+
+|       | akaze | sift | harris | shitomasi | fast  | brisk | orb |
+|-------|-------|------|--------|-----------|-------|-------|-----|
+| akaze | 120   | -    | -      | -         | -     | -     | -   |
+| sift  | -     | 92   | 19     | 104       | 310   | 190   | 85  |
+| brisk | -     | 68   | 18     | 79        | 210   | 142   | 76  |
+| brief | -     | 74   | 18     | 92        | 248   | 149   | 51  |
+| orb   | -     | -    | 18     | 86        | 231   | 98    | 65  |
+| freak | -     | 60   | 15     | 62        | 168   | 125   | 40  |
+
+Time taken for all above-mentioned combinations to calculate for all 10 images are shown here
+
+|       | akaze | sift | harris | shitomasi | fast  | brisk | orb  |
+|-------|-------|------|--------|-----------|-------|-------|------|
+| akaze | 943   | -    | -      | -         | -     | -     | -    |
+| sift  | -     | 1096 | 213    | 198       | 192   | 2227  | 331  |
+| brisk | -     | 2322 | 1883   | 1862      | 1843  | 3801  | 2011 |
+| brief | -     | 743  | 128    | 117       | 72    | 2138  | 126  |
+| orb   | -     | -    | 148    | 136       | 231   | 2147  | 340  |
+| freak | -     | 983  | 381    | 372       | 328   | 2451  | 402  |
+
+From the data shown in the tables above; and since we are aiming at collision avoidance system in a moving vehicle. I believe
+fast results are with highest importance. Here are my top 3 recommendations:
+1- fast has largest number of keypoints detected, when combined with brief, it also gives high matches with considerable low time
+2- also, fast with sift can give considerably better results that other combinations
+3- shitomasi with brief can be a good combination according to number of matches given time
+
+
+

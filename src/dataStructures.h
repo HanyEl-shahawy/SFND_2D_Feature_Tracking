@@ -4,6 +4,7 @@
 #include <vector>
 #include <opencv2/core.hpp>
 
+using namespace std;
 
 struct DataFrame { // represents the available sensor information at the same time instance
     
